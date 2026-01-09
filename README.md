@@ -103,3 +103,21 @@ Dưới đây là quy trình mình đưa ra để phân tích mã độc này:
 - Tuy nhiên, nếu cả 2 chương trình giống nhau hoàn toàn thì chương trình `Setup.exe` không thể coi là mã độc được. Ngoài ra, trong thực tế, khi chạy chương trình đó thì mình có phát hiện nó sinh ra 1 số file không chính thống và có kết nối tới server để tải thêm các file khác về nên mình sẽ thực hiện phân tích động để làm rõ hành vi của mã độc này.
 
 ## 3. Phân tích động
+### 3.1. Phân tích động cơ bản
+- Trước hết mình sẽ thực hiện phân tích động cơ bản với việc chạy thử trong môi trường sandbox.
+- Trước khi chạy chương trình, mình sẽ setup các môi trường và tool như sau:
+  - Môi trường thực thi: Máy ảo VMWare Windows 10.
+  - Tool sử dụng: Process Monitor và Regshot.
+  - Ngoài ra, để tránh bỏ sót hoặc có vấn đề gì xảy ra cần phải khôi phục trạng thái, mình tạo 1 snapshot máy ảo 1 lần và đặt tên nó là "Normal".
+
+    ![alt text](images/trojan025.png)
+
+- Với Process Monitor, mình setup các sự kiện cần capture như hình dưới đây:
+
+  ![alt text](images/trojan023.png)
+
+- Với Regshot, mình bấm shot 1 lần để lưu lại toàn bộ các thông tin registry khi máy đang hoạt động bình thường.
+
+  ![alt text](images/trojan024.png)
+
+- Tiếp theo, mình tiến hành chạy chương trình rồi kiểm tra những sự thay đổi.
