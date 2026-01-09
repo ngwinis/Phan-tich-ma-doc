@@ -93,13 +93,13 @@ Dưới đây là quy trình mình đưa ra để phân tích mã độc này:
     ![alt text](images/trojan020.png)
 
 ### 2.4. Các hành vi
-- Nhận xét tổng quan: Đây là một mã độc trojan giả danh chương trình **`node.exe`**. Lý do là bởi các strings mã giả js vừa phát hiện ở phía trên, cùng với 1 vài đoạn code ở hàm main sau đây khá giống với chương trình `node.exe` sạch.
+- Nhận xét tổng quan: Đây là một mã độc trojan giả danh chương trình **`node.exe`**.
+- Lý do mình khẳng định đây là trojan giả danh chương trình `node.exe` là bởi khi mình đọc các đoạn mã giả đã decompile của mã độc thì thấy nó tải chương trình nodejs phiên bản `25.2.1` nên mình đã lên trang web chính thức của nodejs và tải về và check 1 vài string thấy cả 2 giống hệt nhau
 
   ![alt text](images/trojan021.png)
 
   ![alt text](images/trojan022.png)
 
-- 
+- Tuy nhiên, nếu cả 2 chương trình giống nhau hoàn toàn thì chương trình `Setup.exe` không thể coi là mã độc được. Ngoài ra, trong thực tế, khi chạy chương trình đó thì mình có phát hiện nó sinh ra 1 số file không chính thống và có kết nối tới server để tải thêm các file khác về nên mình sẽ thực hiện phân tích động để làm rõ hành vi của mã độc này.
 
 ## 3. Phân tích động
-
