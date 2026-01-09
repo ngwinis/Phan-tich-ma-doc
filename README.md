@@ -93,7 +93,13 @@ Dưới đây là quy trình mình đưa ra để phân tích mã độc này:
     ![alt text](images/trojan020.png)
 
 ### 2.4. Các hành vi
+- Nhận xét tổng quan: Đây là một mã độc trojan giả danh chương trình **`node.exe`**. Lý do là bởi các strings mã giả js vừa phát hiện ở phía trên, cùng với 1 vài đoạn code ở hàm main sau đây khá giống với chương trình `node.exe` sạch.
 
+  ![alt text](images/trojan021.png)
+
+  ![alt text](images/trojan022.png)
+
+- 
 
 ## 3. Phân tích động
 
