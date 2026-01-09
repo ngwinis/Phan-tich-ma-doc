@@ -106,7 +106,7 @@ Dưới đây là quy trình mình đưa ra để phân tích mã độc này:
 ### 3.1. Phân tích động cơ bản
 - Trước hết mình sẽ thực hiện phân tích động cơ bản với việc chạy thử trong môi trường sandbox.
 - Trước khi chạy chương trình, mình sẽ setup các môi trường và tool như sau:
-  - Môi trường thực thi: Máy ảo VMWare Windows 10.
+  - Môi trường thực thi: Máy ảo VMWare Windows 10 có mở sẵn Google Chrome (Lý do là trong thực tế chương trình này đánh cắp mật khẩu mạng xã hội lưu trong trình duyệt này).
   - Tool sử dụng: Process Monitor và Regshot.
   - Ngoài ra, để tránh bỏ sót hoặc có vấn đề gì xảy ra cần phải khôi phục trạng thái, mình tạo 1 snapshot máy ảo 1 lần và đặt tên nó là "Normal".
 
