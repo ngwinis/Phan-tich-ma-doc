@@ -121,3 +121,61 @@ Dưới đây là quy trình mình đưa ra để phân tích mã độc này:
   ![alt text](images/trojan024.png)
 
 - Tiếp theo, mình tiến hành chạy chương trình rồi kiểm tra những sự thay đổi.
+
+### 3.2. Kết quả Procmon
+- Sau khi chạy chương trình Setup.exe, mình kiểm tra trong công cụ procmon thì thấy các sự kiện bắt được như hình dưới
+
+  ![alt text](images/trojan026.png)
+
+  ![alt text](images/trojan027.png)
+
+  - Cụ thể, tiến trình **`Setup.exe`** đã tạo 1 file `log.txt` trong thư mục `C:\Users\user\AppData\Local\Temp` và ghi các log để xác nhận các hành vi sau các bước thực hiện của chương trình.
+  - Ngoài ra, tiến trình này còn tạo 1 folder **`WinUpdate_20260109_...`** để chuẩn bị tải các file độc hại cần thiết.
+- Ngay bên dưới ta có thể biết file được tải về là file gì:
+
+  ![alt text](images/trojan028.png)
+
+  - Ở đây có thể thấy chương trình **`Setup.exe`** đã tạo file **`runtime.zip`**, nói cách khác, nó đang tải file **`runtime.zip`** từ 1 server nào đó và ghi vào trong thư mục **`WinUpdate_20260109_...`**. Tuy nhiên, chỉ có quá trình CreateFile xảy ra đối với file `runtime.zip` mà không có quá trình WriteFile, ngoài ra, ngay sau tiến trình CreateFile `runtime.zip` bên dưới có quá trình WriteFile đối với file `log.txt`. Tại đây, mình không thể phân tích được thêm gì từ công cụ procmon.
+
+### 3.3. Kết quả Regshot
+- Sau khi regshot lần 2 mình đã so sánh và lưu ra file [compare_regshot.txt](IOCs/compare_regshot.txt), tuy nhiên trong số các thay đổi được ghi lại này không có dấu hiệu nào độc hại, chủ yếu là các thay đổi trong khi thao tác với hệ thống Windows vì thế trước mắt chưa thể kết luận chương trình `Setup.exe` là chương trình chính gây hành vi độc hại.
+
+### 3.4. Kết quả file `log.txt`
+- Như đã phân tích ở trên, Windows ghi lại hành vi tạo và ghi file của chương trình `Setup.exe` và lưu vào 1 file [`log.txt`](IOCs/log.txt) trong thư mục Temp.
+- Có thể thấy log này được viết bằng tiếng Nga nên có thể dự đoán phần nào nguồn gốc của mã độc.
+- Khi dịch log tiếng Nga này ra có thể phân tích dễ dàng hành vi của chương trình này hơn:
+
+  ![alt text](images/trojan029.png)
+
+- Về nội dung, có thể tạm mô tả hành vi như sau:
+  - Tạo 1 folder `C:\Users\user\AppData\Local\Temp\WinUpdate_20260109_213853_950b5ec7e615`.
+  - Chuẩn bị tải 1 file `runtime.zip` từ server có sẵn, cụ thể là `http://178.236.252.150/vqel1hbwbcepykj/runtime.zip`, về thư mục vừa tạo trong Temp.
+  - Trong khi tải file đó về, chương trình lấy thông tin User Agent của trình duyệt để gửi về server.
+  - Tiếp theo chương trình chờ kết nối tới server thành công để tiến hành tải file `runtime.zip` về máy nạn nhân. Tuy nhiên, trong log ghi lại là **"Request timed out"**, có nghĩa là hết thời gian chờ kết nối. Điều này có thể tạm kết luận rằng thời điểm chạy chương trình `Setup.exe` thì server đã đóng để tránh phát hiện.
+  - Trong trường hợp này, mã độc được chạy vào thời điểm khá muộn nên không thể tránh khỏi các nỗ lực ngăn chặn truy vết. Vì thế, nếu dừng lại ở đây thì không thể phát hiện thêm hành vi nào khác khiến cho hệ thống máy tính bị thay đổi so với ban đầu.
+- Rất may mắn, ở thời điểm bị nhiễm mã độc, mình đã kịp thời lưu lại toàn bộ file log và phần nào đó các file liên quan để dễ dàng phân tích tiếp các hành vi ở thời điểm đó.
+
+### 3.5. Kết quả file `log.txt` ở thời điểm bị nhiễm
+- File log ở thời điểm bị nhiễm mình đã lưu tại [log.txt](Practical_IOCs/log_infected.txt).
+- Có thể thấy ngay sau log lấy thông tin User-Agent thì có log thông báo đã tải thành công file `runtime.zip`
+
+  ![alt text](images/trojan030.png)
+
+- Tương tự, sau đó mã độc liên tục thực hiện các hành vi:
+  - Tải các file `cmake.zip`
+  - Unzip file `runtime.zip` ra file `updater.exe` rồi chạy file `updater.exe` này.
+
+    ![alt text](images/trojan031.png)
+  
+  - Tạo 1 thư mục ẩn `C:\ProgramData\Neptune`, sau đó giải nén file `cmake.zip` vào thư mục này, từ đây, trong thư mục xuất hiện 3 file mới có tên lần lượt là `root1.exe`, `root2.exe`, `root3.exe`, sau đó 3 file này theo thứ tự được đổi tên thành `falcon.exe`, `summer.exe`, `dispute.exe`.
+
+    ![alt text](images/trojan032.png)
+
+  - Ngoài ra, các file `runtime.zip`, `cmake.zip` còn bị xoá ngay sau khi đã giải nén xong, sau đó 3 file được giải nén từ `cmake.zip` lần lượt được thực thi.
+
+    ![alt text](images/trojan033.png)
+
+> **KẾT LUẬN:** Dựa vào các log được ghi lại, ta có thể biết được có thêm file `runtime.zip` được tải về và giải nén thành file `updater.exe`, file `cmake.zip` được tải về và giải nén thành 3 file `falcon.exe`, `summer.exe` và `dispute.exe`. Từ đây, mình sẽ phân tích tiếp các file liên quan này.
+
+### 3.4. Phân tích file `falcon.exe`
+- 
