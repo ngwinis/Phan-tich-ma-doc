@@ -175,7 +175,7 @@ Tiếp theo đây là quy trình mình đưa ra để phân tích mã độc nà
 - Rất may mắn, ở thời điểm bị nhiễm mã độc, mình đã kịp thời lưu lại toàn bộ file log và phần nào đó các file liên quan để dễ dàng phân tích tiếp các hành vi ở thời điểm đó.
 
 ### 3.5. Kết quả file `log.txt` ở thời điểm bị nhiễm
-- File log ở thời điểm bị nhiễm mình đã lưu tại [log.txt](Practical_IOCs/log_infected.txt).
+- File log ở thời điểm bị nhiễm mình đã lưu tại [log.txt](IOCs/log_infected.txt).
 - Có thể thấy ngay sau log lấy thông tin User-Agent thì có log thông báo đã tải thành công file `runtime.zip`
 
   ![alt text](images/trojan030.png)
@@ -290,7 +290,7 @@ Với file `updater.exe` và file `dispute.exe` thì sau khi được giải né
 
   ![alt text](images/trojan064.png)
 
-- Mình sử dụng IPinfo để kiểm tra thì thấy đây chỉ là 1 server có lẽ là chỉ nhận dữ liệu được tải lên. Sau đó mình sử dụng Wireshark để bắt các gói tin liên quan đến địa chỉ IP này thì thấy nó có các dấu hiệu khá rõ ràng của 1 crypto-mining:
+- Mình sử dụng IPinfo để kiểm tra thì thấy đây chỉ là 1 server có lẽ là chỉ nhận dữ liệu được tải lên. Sau đó mình sử dụng Wireshark để bắt các [gói tin](IOC-network/IPconnections.pcapng) liên quan đến địa chỉ IP này thì thấy nó có các dấu hiệu khá rõ ràng của 1 crypto-mining:
 
   ![alt text](images/trojan067.png)
 
