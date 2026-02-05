@@ -219,7 +219,7 @@ Với file `updater.exe` và file `dispute.exe` thì sau khi được giải né
 
     ![alt text](images/trojan047.png)
 
-  - Thứ nhất, tring hardcode trong ảnh dẫn tới 1 nghi ngờ chương trình này có kết nối tới C2 server để trao đổi dữ liệu. Thực tế khi mình kiểm tra network của tiến trình này thì phát hiện nó thực sự có kết nối tới địa chỉ IP hardcode trên:
+  - Thứ nhất, string hardcode trong ảnh dẫn tới 1 nghi ngờ chương trình này có kết nối tới C2 server để trao đổi dữ liệu. Thực tế khi mình kiểm tra network của tiến trình này thì phát hiện nó thực sự có kết nối tới địa chỉ IP hardcode trên:
 
     ![alt text](images/trojan054.png)
 
