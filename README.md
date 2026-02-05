@@ -1,4 +1,4 @@
-# Báo cáo phân tích mã độc Trojan/Stealer
+# Báo cáo phân tích mã độc Trojan/Stealer - Trojan/Crypto miner
 
 ## 0. Tổng quan
 
