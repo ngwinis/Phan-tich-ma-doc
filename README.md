@@ -219,7 +219,7 @@ Với file `updater.exe` và file `dispute.exe` thì sau khi được giải né
 
     ![alt text](images/trojan047.png)
 
-  - Thứ nhất, string hardcode trong ảnh dẫn tới 1 nghi ngờ chương trình này có kết nối tới C2 server để trao đổi dữ liệu. Thực tế khi mình kiểm tra network của tiến trình này thì phát hiện nó thực sự có kết nối tới địa chỉ IP hardcode trên:
+  - Thứ nhất, string hardcode trong ảnh dẫn tới 1 nghi ngờ chương trình này có kết nối tới C2 server để trao đổi dữ liệu (IP: `192.251.107.99:8443`). Thực tế khi mình kiểm tra network của tiến trình này thì phát hiện nó thực sự có kết nối tới địa chỉ IP hardcode trên:
 
     ![alt text](images/trojan054.png)
 
@@ -286,7 +286,7 @@ Với file `updater.exe` và file `dispute.exe` thì sau khi được giải né
 
 - Hash 256: `3bb5adefa0ecb97c7a63e680cbe053298c270b0baf235138900c23ab887e7333`
 
-- Từ kết quả DIE có thể thấy rõ chương trình dump ra là 1 chương trình đã bị pack bởi UPX, tuy nhiên đây là một chương trình được dump từ trong tiến trình nên đã có ít nhiều những sự thay đổi trong quá trình thực thi nên rất khó để có thể phân tích được hành vi của nó. Tuy nhiên, khi sử dụng các công cụ giám sát tiến trình khác, mình có thể thấy được hành vi của nó là có kết nối tới 1 địa chỉ IP bên ngoài (130.12.182.32):
+- Từ kết quả DIE có thể thấy rõ chương trình dump ra là 1 chương trình đã bị pack bởi UPX, tuy nhiên đây là một chương trình được dump từ trong tiến trình nên đã có ít nhiều những sự thay đổi trong quá trình thực thi nên rất khó để có thể phân tích được hành vi của nó. Tuy nhiên, khi sử dụng các công cụ giám sát tiến trình khác, mình có thể thấy được hành vi của nó là có kết nối tới 1 địa chỉ IP bên ngoài (`130.12.182.32`):
 
   ![alt text](images/trojan064.png)
 
@@ -317,7 +317,7 @@ Với file `updater.exe` và file `dispute.exe` thì sau khi được giải né
 Tóm tắt quá trình tấn công:
 
   ![alt text](images/trojan069.png)
-  
+
   - Nạn nhân chạy file `Setup.exe` giả danh công cụ cài đặt Adobe Photoshop.
   - `Setup.exe` thực chất lại giả danh chương trình dựng web js là `node.exe` và hành vi thực sự của nó là tải 2 file độc hại `falcon.exe` và `summer.exe`. Giai đoạn này có ghi lại log để xác nhận tải và giải nén thành công trong file `log.txt`.
   - 2 file được tải về bị pack bởi Themida nên không thể trực tiếp debug trên máy ảo VMWare hay sử dụng debugger như IDA Pro.
