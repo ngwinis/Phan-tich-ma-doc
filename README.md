@@ -315,6 +315,9 @@ Với file `updater.exe` và file `dispute.exe` thì sau khi được giải né
 
 ## 4. Kết luận
 Tóm tắt quá trình tấn công:
+
+  ![alt text](images/trojan069.png)
+  
   - Nạn nhân chạy file `Setup.exe` giả danh công cụ cài đặt Adobe Photoshop.
   - `Setup.exe` thực chất lại giả danh chương trình dựng web js là `node.exe` và hành vi thực sự của nó là tải 2 file độc hại `falcon.exe` và `summer.exe`. Giai đoạn này có ghi lại log để xác nhận tải và giải nén thành công trong file `log.txt`.
   - 2 file được tải về bị pack bởi Themida nên không thể trực tiếp debug trên máy ảo VMWare hay sử dụng debugger như IDA Pro.
